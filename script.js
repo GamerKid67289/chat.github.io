@@ -3,11 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendButton = document.getElementById("sendButton");
   const chatMessages = document.getElementById("chatMessages");
 
-  // Prompt for user name
   const userName = prompt("Please enter your name:");
-  if (!userName) return; // User canceled or didn't provide a name
+  if (!userName) return;
 
-  // Initialize PubNub
+  // Prompt for profile picture URL
+  const profilePictureUrl = prompt("Please enter your profile picture URL:");
+  if (!profilePictureUrl) return;
+
+  const user = {
+    userName: userName,
+    profilePictureUrl: profilePictureUrl,
+  };
+
   const pubnub = new PubNub({
     publishKey: 'pub-c-e42d1bf9-f7d0-4fa9-8ff0-e4c3c15327e5',
     subscribeKey: 'sub-c-bc9cd395-dd8a-4177-84f5-ac4b368108aa'
@@ -18,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (message !== "") {
       pubnub.publish({
         channel: 'chat-channel',
-        message: { userName: userName, text: message },
+        message: { user: user, text: message },
       });
       messageInput.value = "";
     }
@@ -33,7 +40,21 @@ document.addEventListener("DOMContentLoaded", () => {
   function displayMessage(message) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message");
-    messageElement.textContent = `${message.userName}: ${message.text}`;
+
+    const userElement = document.createElement("div");
+    userElement.classList.add("user");
+    const userImage = document.createElement("img");
+    userImage.classList.add("profile-pic");
+    userImage.src = message.user.profilePictureUrl;
+    userElement.appendChild(userImage);
+    userElement.textContent = message.user.userName;
+    messageElement.appendChild(userElement);
+
+    const textElement = document.createElement("div");
+    textElement.classList.add("text");
+    textElement.textContent = message.text;
+    messageElement.appendChild(textElement);
+
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
