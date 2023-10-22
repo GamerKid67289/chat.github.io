@@ -1,47 +1,20 @@
-/* Basic styling for the chat container and messages */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+/* Add some styling for the user input field */
+.user-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
 }
 
-.chat-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.user-container label {
+    font-weight: bold;
 }
 
-.chat-messages {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
+/* Update message style to make the username bold */
+.message {
+    margin: 10px 0;
 }
 
-#messageInput {
-  width: 80%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-#sendButton {
-  padding: 5px 10px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-/* Styling for profile pictures */
-.profile-pic {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-right: 5px;
+.message strong {
+    font-weight: bold;
 }
