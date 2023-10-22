@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat App</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Person selector: this contains buttons for user to select whether to chat as John or Jane -->
-    <div class="person-selector">
-      <button class="button person-selector-button active-person" id="john-selector">John</button>
-      <button class="button person-selector-button" id="jane-selector">Jane</button>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Chat Website
+  </title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+ </head>
+ <body>
+  <div class="container mt-5">
+   <div class="chat-container">
+    <div class="chat-header">
+     Chat Room
     </div>
-    <div class="chat-container">
-      <h2 class="chat-header">John chatting...</h2>
-
-      <div class="chat-messages">
-        <div class="message blue-bg">
-          <div class="message-sender">John</div>
-          <div class="message-text">Hey Jane, what's up?</div>
-          <div class="message-timestamp">10:30 AM</div>
-        </div>
-        <div class="message gray-bg">
-          <div class="message-sender">Jane</div>
-          <div class="message-text">Not much, just living the dream. How about you?</div>
-          <div class="message-timestamp">10:35 AM</div>
-        </div>
-      </div>
-
-      <form class="chat-input-form">
-        <input type="text" class="chat-input" required placeholder="Type here, John..." />
-        <button type="submit" class="button send-button">Send</button>
-      </form>
-      <button class="button clear-chat-button">Clear Chat</button>
+    <div class="chat-messages" id="chatMessages">
+     <!-- Chat messages will be dynamically added here -->
     </div>
-
-    <script src="app.js"></script>
-  </body>
+    <div class="chat-input">
+     <input id="messageInput" placeholder="Type your message..." type="text"/>
+     <button id="sendButton">
+      Send
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Bootstrap & jQuery JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+  </script>
+  <!-- Custom JS -->
+ </body>
 </html>
