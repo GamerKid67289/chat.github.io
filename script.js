@@ -32,7 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 const response = xhr.responseText;
-                appendMessage("Server", response);
+                if (response.indexOf("Message sent:") === 0) {
+                    // Only append the message to the chat if it starts with "Message sent:"
+                    const message = response.replace("Message sent:", "").trim();
+                    appendMessage("You", message);
+                }
             }
         };
         xhr.send(`message=${encodeURIComponent(message)}`);
@@ -49,7 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const messages = xhr.responseText.split("\n");
                 messages.forEach((msg) => {
                     const [sender, message] = msg.split(":");
-                    appendMessage(sender, message);
+                    if (sender && message) {
+                        appendMessage(sender, message);
+                    }
                 });
             }
         };
