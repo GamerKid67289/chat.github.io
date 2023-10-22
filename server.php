@@ -1,22 +1,34 @@
 <?php
+// Create or load a chat history file
+$chatHistoryFile = 'chat_history.txt';
+
+// Function to retrieve chat history
+function getChatHistory() {
+    global $chatHistoryFile;
+    if (file_exists($chatHistoryFile)) {
+        return file_get_contents($chatHistoryFile);
+    } else {
+        return '';
+    }
+}
+
+// Function to save a new message to the chat history
+function saveMessage($message) {
+    global $chatHistoryFile;
+    file_put_contents($chatHistoryFile, $message . PHP_EOL, FILE_APPEND);
+}
+
+// Handle incoming messages
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = $_POST['message'];
-    
     if (!empty($message)) {
-        // Open the file in append mode
-        $file = fopen('chat.txt', 'a');
-        if ($file) {
-            // Append the message to the file
-            fwrite($file, "User: $message\n");
-            fclose($file);
-            echo "Message sent: $message";
-        } else {
-            echo "Error writing to the file.";
-        }
-    } else {
-        echo "Message is empty.";
+        $username = $_POST['username'];
+        $formattedMessage = "<strong>$username:</strong> $message";
+        saveMessage($formattedMessage);
     }
-} else {
-    echo "Invalid request.";
 }
+
+// Serve chat history
+header('Content-Type: text/plain');
+echo getChatHistory();
 ?>
