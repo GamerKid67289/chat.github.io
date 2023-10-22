@@ -1,12 +1,22 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle sending messages
     $message = $_POST['message'];
-    file_put_contents('chat.txt', "You:$message\n", FILE_APPEND);
-    echo "Message sent: $message";
+    
+    if (!empty($message)) {
+        // Open the file in append mode
+        $file = fopen('chat.txt', 'a');
+        if ($file) {
+            // Append the message to the file
+            fwrite($file, "User: $message\n");
+            fclose($file);
+            echo "Message sent: $message";
+        } else {
+            echo "Error writing to the file.";
+        }
+    } else {
+        echo "Message is empty.";
+    }
 } else {
-    // Handle retrieving messages
-    $messages = file_get_contents('chat.txt');
-    echo $messages;
+    echo "Invalid request.";
 }
 ?>
