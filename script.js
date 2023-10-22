@@ -1,26 +1,61 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const chat = document.getElementById("chat");
+document.addEventListener("DOMContentLoaded", function () {
+    const chatBox = document.getElementById("chat-box");
     const messageInput = document.getElementById("message");
     const sendButton = document.getElementById("send");
-    const usernameInput = document.getElementById("username");
 
-    sendButton.addEventListener("click", function() {
-        const messageText = messageInput.value.trim();
-        const username = usernameInput.value.trim();
+    sendButton.addEventListener("click", sendMessage);
 
-        if (messageText !== "" && username !== "") {
-            const messageElement = document.createElement("div");
-            messageElement.className = "message";
-            messageElement.innerHTML = `<strong>${username}:</strong> ${messageText}`;
-            chat.appendChild(messageElement);
+    function sendMessage() {
+        const message = messageInput.value;
+        if (message) {
+            appendMessage("You", message);
             messageInput.value = "";
-            chat.scrollTop = chat.scrollHeight;
-        }
-    });
 
-    messageInput.addEventListener("keyup", function(event) {
-        if (event.key === "Enter") {
-            sendButton.click();
+            // Send the message to the server
+            sendToServer(message);
         }
-    });
+    }
+
+    function appendMessage(sender, message) {
+        const messageElement = document.createElement("p");
+        messageElement.textContent = `${sender}: ${message}`;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function sendToServer(message) {
+        // Simulated server logic (using PHP)
+        // In a real application, you would make an AJAX request or use WebSockets.
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "server.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = xhr.responseText;
+                appendMessage("Server", response);
+            }
+        };
+        xhr.send(`message=${encodeURIComponent(message)}`);
+    }
+
+    // Simulate receiving messages from the server (polling)
+    function pollForMessages() {
+        // Simulated server logic (using PHP)
+        // In a real application, you would make an AJAX request to retrieve new messages.
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "server.php", true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const messages = xhr.responseText.split("\n");
+                messages.forEach((msg) => {
+                    const [sender, message] = msg.split(":");
+                    appendMessage(sender, message);
+                });
+            }
+        };
+        xhr.send();
+    }
+
+    // Start polling for new messages
+    setInterval(pollForMessages, 2000);
 });

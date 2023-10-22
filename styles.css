@@ -1,20 +1,31 @@
-/* Add some styling for the user input field */
-.user-container {
-    max-width: 600px;
+body {
+    font-family: Arial, sans-serif;
+}
+
+#chat {
+    width: 300px;
     margin: 0 auto;
-    padding: 20px;
-    text-align: center;
 }
 
-.user-container label {
-    font-weight: bold;
+#chat-box {
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
 }
 
-/* Update message style to make the username bold */
-.message {
-    margin: 10px 0;
+#input-box {
+    display: flex;
 }
 
-.message strong {
-    font-weight: bold;
+#message {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#send {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
